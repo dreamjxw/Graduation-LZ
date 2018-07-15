@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <setting name="cacheEnabled" value="false"/>
+        <setting name="defaultExecutorType" value="REUSE"/>
+        <setting name="useGeneratedKeys" value="true"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <typeAliases>
+        <typeAlias type="com.lz.design.dao.handler.OrderGoodsHandler" alias="OrderGoodsHandler"></typeAlias>
+        <typeAlias type="com.lz.design.dao.handler.GoodsHandler" alias="GoodsHandler"></typeAlias>
+        <typeAlias type="com.lz.design.dao.handler.JsonFieldHandler" alias="JsonFieldHandler"></typeAlias>
+    </typeAliases>
+    <mappers>
+        <mapper resource="mapper/ActivityDao.xml"/>
+        <mapper resource="mapper/ComplainDao.xml"/>
+        <mapper resource="mapper/GoodsDao.xml"/>
+        <mapper resource="mapper/OrderDao.xml"/>
+        <mapper resource="mapper/StockDao.xml"/>
+        <mapper resource="mapper/UserDao.xml"/>
+        <mapper resource="mapper/LoggerDao.xml"/>
+        <mapper resource="mapper/ShopCartDao.xml"/>
+    </mappers>
+</configuration>

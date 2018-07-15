@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;  //兼容低版本的火狐
+	-webkit-box-sizing:border-box; //兼容低版本的krom浏览器
+	color:#000;   
+}
+body{
+	font-size:12px;
+	font-family:Arial,Verdana,Tahoma,"微软雅黑","黑体";
+	line-height:120%;
+	background:#fff;
+	margin:0;
+	overflow-x:hidden;  //水平方向滚动条隐藏
+}
+p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,form,table{
+	margin:0;
+	padding:0;
+}
+a,img{
+	border:none;
+}
+img{
+	vertical-align:middle;  //基线对齐（top，middle）
+	border:0;
+}
+li{
+	list-style:none;
+}
+i,em{
+	font-style:normal;
+}
+a{
+	text-decoration:none; 
+	color:#000000;
+	border:0;
+}
+a:link{
+	text-decoration:none; 
+	color:#000000;
+}
+a:hover{
+	text-decoration:none; 
+	color:#000000;
+}
+a:visited{
+	text-decoration:none; 
+	color:#000000;
+}
+a:active{
+	text-decoration:none; 
+	color:#000000;
+}
+.clearfix:before,.clearfix:after{
+	display:table;
+	content:"";
+}
+.clearfix:after{
+	clear:both;
+}
+.clearfix{
+	*zoom:1;
+}

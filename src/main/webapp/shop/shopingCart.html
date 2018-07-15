@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <link href="css/common.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body class="shoppingCart">
+<div id="page">
+    <div class="top">
+        <ul class="nav clearfix">
+            <li>
+                <a :href="'./index.html?userId='+this.userId">首页<img src="img/nav/home-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <li>
+                <a :href="'./personCenter.html?userId='+this.userId">个人中心<img src="img/nav/my-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <li>
+                <a :href="'./shopingCart.html?userId='+this.userId">购物车<img src="img/nav/shoppingcart-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <div class="logo">
+                臻佳超市
+            </div>
+        </ul>
+    </div>
+    <div class="section">
+        <ul class="tittle clearfix">
+            <li class="select clearfix"><span class="check" @click="selectPro(isSelectAll)" :class="{'check-true':isSelectAll}"></span><span class="check-right">全选</span></li>
+            <li class="brief">商品信息</li>
+            <li class="price">单价</li>
+            <li class="number">数量</li>
+            <li class="total">金额</li>
+            <li class="revise">操作</li>
+        </ul>
+        <ul class="proList">
+            <li class="clearfix" v-for="(item,index) in goodsList">
+                <div class="select clearfix">
+                    <span class="check" @click="item.select = !item.select" :class="{'check-true':item.select}"></span>
+                    <span class="check-right">
+                        <img :src="item.goodsImg">
+                    </span>
+                </div>
+                <div class="brief">
+                    <p>{{item.goodsName}}</p>
+                    <p>{{item.goodsScore}}</p>
+                </div>
+                <div class="price">￥{{item.goodsPrice}}</div>
+                <div class="number">
+                    <div class="box clearfix">
+                        <span @click="{{item.goodsNum > 1 ? item.goodsNum-- : 1}}">-</span>
+                        <span>{{item.goodsNum}}</span>
+                        <span @click="{{item.goodsNum++}}">+</span>
+                    </div>
+
+                </div>
+                <div class="total">{{(item.goodsNum*item.goodsPrice).toFixed(2)}}</div>
+                <div class="delete">
+                    <span @click="deletPro(index)">删除</span>
+                </div>
+            </li>
+        </ul>
+
+
+        <div class="footer clearfix">
+            <div class="deleteAll clearfix" @click="deleteProduct">删除所有商品</div>
+            <div class="footer-right clearfix">
+                <div class="add-up">共<span> {{getTotal.totalNum}} </span>件商品共：<span>{{getTotal.totalPrice}}</span></div>
+                <div class="settle" @click="settle()">
+                   去结算
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="popUp" v-show="isActive" >
+        <input type="button" value="确认支付" @click="payOrder()">
+    </div>
+</div>
+<script src="./js/lib/vue.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var instance = axios.create({
+        header:{
+            contentType: 'application/x-www-form-urlencoded'
+        }
+    });
+    new Vue({
+        el:"#page",
+        data:{
+            // isSelectAll:true,
+            goodsList:[],
+            userId:'',
+            isShow:false,
+            isActive:false,
+            orderId:''
+        },
+
+        computed: {
+            isSelectAll:function(){
+                return this.goodsList.every(function(val){return val.select});
+            },
+            getTotal:function(){
+                var goodList = this.goodsList.filter(function(val){return val.select});
+                var totalPrice = 0 ,totalNum=0;
+                for(var i = 0 ; i<goodList.length ;i++){
+                    totalPrice += goodList[i].goodsNum * goodList[i].goodsPrice;
+                    totalNum += Number(goodList[i].goodsNum);
+                }
+                return {totalNum : totalNum ,totalPrice:totalPrice.toFixed(2)}
+            }
+        },
+        methods: {
+            selectPro:function(isSelect){
+                var that = this;
+                for(var i = 0 ,len = this.goodsList.length; i<len ; i++){
+                    that.goodsList[i].select = !isSelect;
+                }
+            },
+            deleteProduct:function () {
+                this.goodsList=this.goodsList.filter(function (item) {return !item.select})
+                var that = this;
+                instance({
+                    method:"POST",
+                    url:"http://dreamjxw.imwork.net:80/lz/design/shopcart/deleteAllShopCart.htm",
+                    data:{
+                        "message":that.userId
+                    },
+                    contentType: 'Access-Control-Allow-Origin',
+                }).then(function(res){
+                    console.log(res);
+                    alert("清空购物车成功！");
+                },function(error){
+                    console.log(error);
+                })
+            },
+            deletPro:function(index){
+                this.goodsList.splice(index,1);
+                var that = this;
+                instance({
+                    method:"POST",
+                    url:"http://dreamjxw.imwork.net:80/lz/design/shopcart/deleteShopCart.htm",
+                    data:{
+                        userId:that.userId,
+                        goodsId:that.goodsList[index].goodsId
+                    },
+                    contentType: 'Access-Control-Allow-Origin',
+                }).then(function(res){
+                    console.log(res);
+                },function(error){
+                    console.log(error);
+                })
+            },
+            settle:function(){
+                console.log(this.getTotal.totalPrice)
+                var that = this;
+                var totalData = [];
+                for(var i = 0 ; i<this.goodsList.length;i++){
+                    var data = {};
+                    for(var attr in that.goodsList[i]){
+                        var goodsId = that.goodsList[i].goodsId;
+                        var goodsNum = that.goodsList[i].goodsNum;
+                        data={
+                            goodsId : goodsId,
+                            goodsNum :goodsNum
+                        }
+                    }
+                    totalData.push(data);
+                }
+                console.log(totalData);
+                console.log(typeof totalData);
+                console.log(this.goodsList.length);
+                console.log(this.goodsList[0].userId);
+                instance({
+                    method:"POST",
+                    url:"http://dreamjxw.imwork.net:80/lz/design/order/addOrder.htm",
+                    data:{
+                        "userId":that.userId,
+                        "orderGoods":totalData
+                    },
+                    contentType: 'Access-Control-Allow-Origin',
+                }).then(function(res){
+                    console.log(res.data);
+                    that.orderId = res.data.data.orderId;
+                },function(error){
+                    console.log(error);
+                });
+                this.isActive= !this.isActive;
+            },
+            payOrder:function(){
+                var that = this;
+                instance({
+                    method:"POST",
+                    url:'http://dreamjxw.imwork.net:80/lz/design/order/paymentOrder.htm?userId='+that.userId,
+                    data:{
+                        "message":that.orderId
+                    },
+                    contentType: 'Access-Control-Allow-Origin',
+                }).then(function(res){
+                    console.log(res.data);
+                    alert("支付成功");
+                    that.isActive = false;
+                    instance({
+                        method:"POST",
+                        url:"http://dreamjxw.imwork.net:80/lz/design/shopcart/selectShopCart.htm",
+                        data:{
+                            "message":that.userId
+                        },
+                        contentType: 'Access-Control-Allow-Origin',
+                    }).then(function(res){
+                        console.log(res.data);
+                        that.goodsList = res.data.data;
+                        that.goodsList.map(function(item){
+                            that.$set(item,'select',true);
+                        })
+                    },function(error){
+                        console.log(error);
+                    })
+//                    console.log( that.goodsList);
+                },function(error){
+                    console.log(error);
+                })
+            }
+        },
+        mounted () {
+            function queryString(key){
+                var src = location.search || location.hash,
+                        reg = new RegExp('[?&]' + key + '=([^?&=]*)(?=&|$)'),
+                        match = reg.exec(src);
+                return match == null ? null : decodeURIComponent(match[1]);
+            }
+            var  userId= queryString('userId');
+            this.userId=userId;
+            console.log(userId);
+            var that = this;
+
+            instance({
+                method:"POST",
+                url:"http://dreamjxw.imwork.net:80/lz/design/shopcart/selectShopCart.htm",
+                data:{
+                    "message":userId
+                },
+                contentType: 'Access-Control-Allow-Origin',
+            }).then(function(res){
+                console.log(res.data);
+                that.goodsList = res.data.data;
+                that.goodsList.map(function(item){
+                    that.$set(item,'select',true);
+                })
+            },function(error){
+                console.log(error);
+            })
+
+        }
+    })
+</script>
+</body>
+</html>

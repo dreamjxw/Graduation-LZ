@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lz.design.dao.StockDao">
+    <resultMap id="BaseResultMap" type="com.lz.design.model.Stock">
+        <id column="stock_id" property="stockId" jdbcType="INTEGER"/>
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="goods_ground" property="goodsGround" jdbcType="INTEGER"/>
+        <result column="goods_stock_in" property="goodsStockIn" jdbcType="INTEGER"/>
+        <result column="goods_stock_out" property="goodsStockOut" jdbcType="INTEGER"/>
+        <result column="stock_in_time" property="stockInTime" jdbcType="TIMESTAMP"/>
+        <result column="stock_out_time" property="stockOutTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    stock_id, goods_id, goods_ground, goods_stock_in, goods_stock_out, stock_in_time, 
+    stock_out_time
+  </sql>
+    <select id="selectStock" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_stock
+        <where>
+            <if test="goodsId != null">
+                goods_id = #{goodsId}
+            </if>
+        </where>
+    </select>
+
+    <select id="deleteByGoodsId">
+        DELETE
+        from lz_stock
+        <where>
+            <foreach collection="goodsIds" item="item" open="(" close=")" separator="or">
+                goods_id = #{item}
+            </foreach>
+        </where>
+    </select>
+    <select id="selectUpGoodsStock" resultType="com.lz.design.model.Stock">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from lz_stock
+        where goods_ground > 0
+    </select>
+
+    <insert id="insertStock" parameterType="com.lz.design.model.Stock">
+        insert into lz_stock
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stock.goodsId != null">
+                goods_id,
+            </if>
+            <if test="stock.goodsStockIn != null">
+                goods_stock_in,
+            </if>
+            <if test="stock.stockInTime != null">
+                stock_in_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stock.goodsId != null">
+                #{stock.goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="stock.goodsStockIn != null">
+                #{stock.goodsStockIn,jdbcType=INTEGER},
+            </if>
+            <if test="stock.stockInTime != null">
+                #{stock.stockInTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateStockByGoodsId" parameterType="com.lz.design.model.Stock">
+        update lz_stock
+        <set>
+            <if test="stock.goodsGround != null">
+                goods_ground = #{stock.goodsGround,jdbcType=INTEGER},
+            </if>
+            <if test="stock.goodsStockIn != null">
+                goods_stock_in = #{stock.goodsStockIn,jdbcType=INTEGER},
+            </if>
+            <if test="stock.goodsStockOut != null">
+                goods_stock_out = #{stock.goodsStockOut,jdbcType=INTEGER},
+            </if>
+            <if test="stock.stockInTime != null">
+                stock_in_time = #{stock.stockInTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="stock.stockOutTime != null">
+                stock_out_time = #{stock.stockOutTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where goods_id = #{stock.goodsId,jdbcType=INTEGER}
+    </update>
+</mapper>

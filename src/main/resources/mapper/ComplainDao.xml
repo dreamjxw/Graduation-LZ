@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lz.design.dao.ComplainDao">
+    <resultMap id="BaseResultMap" type="com.lz.design.model.Complain">
+        <id column="complain_id" property="complainId" jdbcType="INTEGER"/>
+        <result column="complain_user_id" property="complainUserId" jdbcType="BIGINT"/>
+        <result column="complain_goods_id" property="complainGoodsId" jdbcType="INTEGER"/>
+        <result column="complain_describe" property="complainDescribe" jdbcType="VARCHAR"/>
+        <result column="complain_start_time" property="complainStartTime" jdbcType="TIMESTAMP"/>
+        <result column="complain_update_time" property="complainUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="complain_state" property="complainState" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    complain_id, complain_user_id, complain_goods_id, complain_describe, complain_start_time,
+    complain_update_time, complain_state
+  </sql>
+    <select id="checkRepeat" resultMap="BaseResultMap" parameterType="com.lz.design.model.Complain">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_complain
+        where complain_goods_id = #{complain.complainGoodsId,jdbcType=INTEGER}
+        AND complain_user_id = #{complain.complainUserId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_complain
+        where complain_goods_id = #{goodsId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_complain
+        <where>
+            <if test="userId!=null">
+                complain_user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByComplainId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_complain
+        where complain_id = #{complainId}
+    </select>
+
+    <delete id="deleteByComplainId" parameterType="java.lang.Integer">
+    delete from lz_complain
+    where complain_id = #{complainId,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insertComplain" parameterType="com.lz.design.model.Complain">
+        insert into lz_complain
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="complain.complainUserId != null">
+                complain_user_id,
+            </if>
+            <if test="complain.complainGoodsId != null">
+                complain_goods_id,
+            </if>
+            <if test="complain.complainDescribe != null">
+                complain_describe,
+            </if>
+            <if test="complain.complainStartTime != null">
+                complain_start_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="complain.complainUserId != null">
+                #{complain.complainUserId,jdbcType=BIGINT},
+            </if>
+            <if test="complain.complainGoodsId != null">
+                #{complain.complainGoodsId,jdbcType=INTEGER},
+            </if>
+            <if test="complain.complainDescribe != null">
+                #{complain.complainDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="complain.complainStartTime != null">
+                #{complain.complainStartTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByComplainId" parameterType="com.lz.design.model.Complain">
+        update lz_complain
+        <set>
+            <if test="complain.complainDescribe != null">
+                complain_describe = #{complain.complainDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="complain.complainState != null">
+                complain_state = #{complain.complainState,jdbcType=INTEGER},
+            </if>
+        </set>
+        where complain_id = #{complain.complainId,jdbcType=INTEGER}
+    </update>
+</mapper>

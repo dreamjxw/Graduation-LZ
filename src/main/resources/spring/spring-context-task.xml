@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="startQuertz" lazy-init="false" autowire="no"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--<ref bean="CheckStockTaskDetailTrigger"/>-->
+            </list>
+        </property>
+    </bean>
+    <!--&lt;!&ndash;检查库存Task&ndash;&gt;-->
+    <!--&lt;!&ndash; ============= 调度业务=============  &ndash;&gt;-->
+    <!--<bean id="CheckStockTask" class="com.jxw.design.task.CheckStockTask"/>-->
+    <!--<bean id="CheckStockTaskDetail"-->
+          <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--&lt;!&ndash; 要调用的对象 &ndash;&gt;-->
+        <!--<property name="targetObject" ref="CheckStockTask"/>-->
+        <!--&lt;!&ndash; 要执行的方法名称 &ndash;&gt;-->
+        <!--<property name="targetMethod" value="doSchedule"/>-->
+        <!--&lt;!&ndash; 如果前一个任务还没有结束第二个任务不会启动 false &ndash;&gt;-->
+        <!--<property name="concurrent" value="false"/>-->
+    <!--</bean>-->
+    <!--<bean id="CheckStockTaskDetailTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail" ref="CheckStockTaskDetail"/>-->
+        <!--&lt;!&ndash;<property name="cronExpression" value="0/10 * * * * ?"/>&ndash;&gt;-->
+        <!--<property name="cronExpression" value="0 0 0 * * ?"/>-->
+    <!--</bean>-->
+</beans>

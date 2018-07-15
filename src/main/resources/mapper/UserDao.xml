@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lz.design.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.lz.design.model.User">
+        <id column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_password" property="userPassword" jdbcType="VARCHAR"/>
+        <result column="user_sex" property="userSex" jdbcType="VARCHAR"/>
+        <result column="user_power" property="userPower" jdbcType="INTEGER"/>
+        <result column="user_headurl" property="userHeadurl" jdbcType="VARCHAR"/>
+        <result column="user_account" property="userAccount" javaType="Double"/>
+        <result column="time" property="time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    user_id, user_name, user_password, user_sex, user_power, user_headurl,user_account, time
+  </sql>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_user
+        <where>
+            <if test="userId!=null">
+                user_id = #{userId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_user
+        where user_name = #{userName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByUserPower" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_user
+        where user_power = #{userPower,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByLoggin" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_user
+        where user_name = #{userName,jdbcType=VARCHAR} AND user_password = #{userPassword,jdbcType=VARCHAR}
+    </select>
+    <select id="selectAllUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_user
+    </select>
+
+
+    <delete id="deleteByUserId" parameterType="java.lang.Long">
+    delete from lz_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insertUser" parameterType="com.lz.design.model.User">
+        insert into lz_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="user.userId != null">
+                user_id,
+            </if>
+            <if test="user.userName != null">
+                user_name,
+            </if>
+            <if test="user.userPassword != null">
+                user_password,
+            </if>
+            <if test="user.userSex != null">
+                user_sex,
+            </if>
+            <if test="user.userPower != null">
+                user_power,
+            </if>
+            <if test="user.userHeadurl != null">
+                user_headurl,
+            </if>
+            <if test="user.time != null">
+                time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="user.userId != null">
+                #{user.userId,jdbcType=BIGINT},
+            </if>
+            <if test="user.userName != null">
+                #{user.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="user.userPassword != null">
+                #{user.userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="user.userSex != null">
+                #{user.userSex,jdbcType=VARCHAR},
+            </if>
+            <if test="user.userPower != null">
+                #{user.userPower,jdbcType=INTEGER},
+            </if>
+            <if test="user.userHeadurl != null">
+                #{user.userHeadurl,jdbcType=VARCHAR},
+            </if>
+            <if test="user.time != null">
+                #{user.time,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateUserInfo" parameterType="com.lz.design.model.User">
+        update lz_user
+        <set>
+            <if test="user.userName != null">
+                user_name = #{user.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="user.userPassword != null">
+                user_password = #{user.userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="user.userSex != null">
+                user_sex = #{user.userSex,jdbcType=VARCHAR},
+            </if>
+            <if test="user.userPower != null">
+                user_power = #{user.userPower,jdbcType=INTEGER},
+            </if>
+            <if test="user.userHeadurl != null">
+                user_headurl = #{user.userHeadurl,jdbcType=VARCHAR},
+            </if>
+            <if test="user.userAccount != null">
+                user_account = #{user.userAccount},
+            </if>
+            <if test="user.time != null">
+                time = #{user.time},
+            </if>
+        </set>
+        where user_id = #{user.userId}
+    </update>
+</mapper>

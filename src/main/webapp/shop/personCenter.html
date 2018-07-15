@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link href="css/common.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="personCenter">
+<div id="page">
+    <div class="top">
+        <ul class="nav clearfix">
+            <li>
+                <a :href="'./index.html?userId='+this.userId">首页<img src="img/nav/home-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <li>
+                <a :href="'./personCenter.html?userId='+this.userId">个人中心<img src="img/nav/my-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <li>
+                <a :href="'./shopingCart.html?userId='+this.userId">购物车<img src="img/nav/shoppingcart-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <div class="logo">
+                臻佳超市
+            </div>
+        </ul>
+    </div>
+
+    <div class="section ">
+        <div class="personInfo clearfix">
+            <div class="headImg clearfix">
+                <img :src="this.userInfo.userHeadurl" >
+                <!--<img src="head/999.jpg">-->
+                <!--<span class="pic">-->
+                    <!--<span @click="upload">点击更换头像</span>-->
+                    <!--<input type="text" v-model="url"  placeholder="请输入网络图片地址！"/>-->
+                <!--</span>-->
+            </div>
+            <div class="personRight">
+                <p>姓名:{{userInfo.userName}}</p>
+                <p>性别：{{userInfo.userSex}}</p>
+                <p>等级：{{userInfo.userPower}}</p>
+                <p>账户余额：￥{{userInfo.userAccount}}</p>
+            </div>
+        </div>
+        <ul class="nav clearfix">
+            <li @click="tabId=0" >查看活动</li>
+            <li @click="tabId=1" >全部订单</li>
+            <!--<li @click="tabId=2" >充值</li>-->
+        </ul>
+
+        <!--活动-->
+        <div class="activity" v-show="tabId==0">
+            <ul>
+                <li class="title clearfix">
+                    <span>活动折扣</span>
+                    <span>活动名称</span>
+                    <span>活动时间</span>
+                </li>
+                <li v-for="(item,index) in activityInfo" class="pro">
+                    <span>活动折扣:{{item.activityDiscount}}</span>
+                    <span>活动名称：{{item.activityName}}</span>
+                    <span>活动时间：{{item.time}}</span>
+                </li>
+            </ul>
+        </div>
+
+        <!--订单-->
+        <div class="allOrder" v-show="tabId==1">
+            <ul>
+                <li v-for="(item,index) in orderList" class="order">
+                    <div class="brief clearfix">
+                        <div class="one">
+                            <span>订单号：</span>
+                            <span>{{item.orderId}}</span>
+                        </div>
+                        <div class="two">
+                            <span class="totalPrice">总价：{{item.orderTotalprice}}</span>
+                        </div>
+                        <div class="tip" @click="find(index)"> > </div>
+                    </div>
+                    <div class="details" v-show="item.select">
+                        <ul class="order-goods">
+                            <li v-for="(val,i) in item.goodsList" class="clearfix">
+                                <div class="goodsPicture">
+                                    <img :src="val.goodsPicture">
+                                </div>
+                                <div class="commodity-information clearfix">
+                                    <span class="brief-introduction">
+                                        {{val.goodsName}}
+                                    </span>
+                                    <span class="goodsPrice">￥ {{val.goodsPrice}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="order-number">X {{val.goodsNum}}</span>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <!--充值-->
+        <!--<div class="recharge" v-show="tabId==2">-->
+            <!--<div>-->
+                <!--<input v-model="account" type="text" class="text" placeholder="请输入充值金额">-->
+            <!--</div>-->
+            <!--<span @click="recharge()" class="confirm">确定充值</span>-->
+        <!--</div>-->
+    </div>
+</div>
+
+
+<script src="./js/lib/vue.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var instance = axios.create({
+        header:{
+            contentType: 'application/x-www-form-urlencoded'
+        }
+    });
+    new Vue({
+        el:"#page",
+        data:{
+            tabId:0,
+            userInfo:[],
+            orderList:[],
+            goodsList:[],
+            activityInfo:[],
+            userId:'',
+            account:'',
+            userPower:'',
+            time:'',
+        },
+        methods:{
+//
+//            recharge: function(){
+//                var that = this;
+//                console.log(123);
+//                instance({
+//                    method:"POST",
+//                    url: 'http://dreamjxw.imwork.net:80/lz/design/user/updateUserInfo.htm?userId='+that.userId +'&changePower='+that.userPower,
+//                    data:{
+//                        "userId":that.userId,
+//                        "userAccount":that.account
+//                    },
+//                    contentType: 'Access-Control-Allow-Origin'
+//                }).then(function(res){
+//                    console.log(res.data);
+//                   that.userInfo.userAccount = res.data.data.userAccount
+//                },function(error){
+//                    console.log(error);
+//                })
+//            },
+            upload:function(){
+
+            },
+            find:function(index){
+                var data=[];
+                var that = this;
+                console.log(this.orderList.orderGoods)
+                for(var i = 0;i<this.orderList[index].orderGoods.length;i++){
+                    var id="";
+                    for(var attr in that.orderList[index].orderGoods[i]){
+                        id = that.orderList[index].orderGoods[i].goodsId;
+                        console.log(id);
+                    }
+                    data.push(id);
+                }
+                console.log(data);
+                instance({
+                    method:"POST",
+                    url:"http://dreamjxw.imwork.net:80/lz/design/goods/selectGoodsEach.htm",
+                    data:data,
+                    contentType: 'Access-Control-Allow-Origin',
+                }).then(function(res){
+                            console.log(res.data);
+                            that.orderList[index].goodsList = res.data.data;
+                            that.orderList[index].goodsList.map(function(item){
+                                that.$set(item,'goodsNum',"");
+                            });
+                            for(var i = 0; i<that.orderList[index].goodsList.length;i++){
+                                that.orderList[index].goodsList[i].goodsNum = that.orderList[index].orderGoods[i].goodsNum;
+                            }
+                            console.log(that.orderList[index].goodsList);
+                        },
+                        function(error){
+                            console.log(error)
+                        })
+                this.orderList[index].select=!this.orderList[index].select;
+            },
+        },
+        mounted(){
+            var that = this;
+            function queryString(key){
+                var src = location.search || location.hash,
+                        reg = new RegExp('[?&]' + key + '=([^?&=]*)(?=&|$)'),
+                        match = reg.exec(src);
+                return match == null ? null : decodeURIComponent(match[1]);
+            }
+            var  userId= queryString('userId');
+            console.log(userId);
+            that.userId = userId;
+            instance({
+                method:"POST",
+                url:"http://dreamjxw.imwork.net:80/lz/design/user/selectUserByUserId.htm",
+                data:{
+                    "message":userId
+                },
+                contentType: 'Access-Control-Allow-Origin'
+            }).then(function(res){
+                console.log(res.data);
+                that.userInfo = res.data.data;
+                console.log(res.data)
+                that.userPower=that.userInfo.userPower
+                instance({
+                    method:"POST",
+                    url:"http://dreamjxw.imwork.net:80/lz/design/activity/selectActivityList.htm",
+                    data:{
+                        "message": res.data.data.userPower
+                    },
+                    contentType: 'Access-Control-Allow-Origin'
+                }).then(function(res){
+                    console.log(res.data);
+                    that.activityInfo = res.data.data;
+                    that.activityInfo.map(function(item){
+                    that.$set(item,'time',"");
+                    });
+                    for(var i = 0 ; i <that.activityInfo.length ; i++){
+                        var myDate= new Date(that.activityInfo[i].activityTime);
+                        var year = myDate.getFullYear();
+                        var month = myDate.getMonth()+1;
+                        var day = myDate.getDate();
+                        that.activityInfo[i].time = year+"."+month+"."+day;
+                    }
+                },function(error){
+                    console.log(error);
+                })
+            },function(error){
+                console.log(error);
+            });
+
+
+            instance({
+                method:"POST",
+                url:"http://dreamjxw.imwork.net:80/lz/design/order/selectOrderByUser.htm",
+                data:{
+                    "message":userId
+                },
+                contentType: 'Access-Control-Allow-Origin'
+            }).then(function(res){
+                console.log(res.data);
+                that.orderList = res.data.data;
+                that.orderList.map(function(item){
+                    that.$set(item,'select',false);
+                    that.$set(item,'goodsList',"");
+                });
+            },function(error){
+                console.log(error);
+            });
+
+
+//            instance({
+//                method:"POST",
+//                url:"http://dreamjxw.imwork.net:80/lz/design/activity/selectActivityList.htm",
+//                data:{
+//                    "message": that.userPower
+//                },
+//                contentType: 'Access-Control-Allow-Origin'
+//            }).then(function(res){
+//                console.log(res.data);
+//                that.activityInfo = res.data.data;
+////                that.activityInfo.map(function(item){
+////                    that.$set(item,'time',"");
+////                });
+//                console.log(res.data.data.length)
+//                for(var i = 0 ; that.activityInfo.length <0;i++){
+//                    var time =that.activityInfo[i].activityTime;
+//                    that.activityInfo[i].activityTime=new Date(parseInt(time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
+//                }
+//            },function(error){
+//                console.log(error);
+//            })
+//
+//
+        }
+    })
+</script>
+</body>
+</html>

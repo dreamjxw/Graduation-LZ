@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情页</title>
+    <link href="css/common.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="goods">
+<div id="page">
+    <div class="top">
+        <ul class="nav clearfix">
+            <li>
+                <a :href="'./index.html?userId='+this.userId">首页<img src="img/nav/home-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <li>
+                <a :href="'./personCenter.html?userId='+this.userId">个人中心<img src="img/nav/my-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <li>
+                <a :href="'./shopingCart.html?userId='+this.userId">购物车<img src="img/nav/shoppingcart-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <div class="logo">
+                臻佳超市
+            </div>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="pro clearfix">
+            <div class="goodImg">
+                <div>
+                    <img :src="goodsInfo.goodsPicture" >
+                </div>
+            </div>
+            <div class="goodInfo">
+                <p>类别：{{goodsInfo.goodsClass}}</p>
+                <p>名称：{{goodsInfo.goodsName}}</p>
+                <p>描述：{{goodsInfo.goodsDescribe}}</p>
+                <div class="price clearfix">
+                    <span>价钱</span>
+                    <span>￥{{goodsInfo.goodsPrice}}</span>
+                </div>
+                <div class="number clearfix">
+                    <span @click="{{num > 1 ? num-- : 1}}">-</span>
+                    <span>{{num}}</span>
+                    <span @click="{{num++}}">+</span>
+                </div>
+                <div class="gift" v-show="isShow">
+                    <div class="tip">
+                        赠品 ：
+                    </div>
+                    <div class="clearfix">
+                        <div class="giftImg">
+                            <img src="./img/shopping_cart/wine_picture.png">
+                        </div>
+                        <div class="giftInfo">
+                            <p>{{giftInfo.goodsClass}}</p>
+                            <p>{{giftInfo.goodsName}}</p>
+                            <p>{{giftInfo.goodsDescribe}}</p>
+                            <p>价钱：￥{{giftInfo.goodsPrice}}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <button class="cart" @click="addCart()">加入购物车</button>
+        </div>
+
+
+    </div>
+
+
+    <div class="words">
+        <p @click ="activeShow = !activeShow" class="check">查看留言</p>
+        <ul class="content" v-show="activeShow">
+            <li v-for="(item,index) in msgList">
+                <div class="clearfix">
+                    <span class="order">{{index+1}}.</span>
+                    <p class="text">{{item.complainDescribe}}</p>
+                    <span class="delete" @click="deleteWords(index)"></span>
+                </div>
+                <span class="reply" @click="active = !active">回复:</span>
+            </li>
+
+        </ul>
+        <div class="add" @click="isActive = !isActive">添加留言</div>
+        <div class="confirm"  v-show="isActive">
+            <textarea class="write" v-model="msg"></textarea>
+            <span @click="add">确定</span>
+        </div>
+    </div>
+
+
+    <div class="confirm"  v-show="active">
+        <textarea class="compose" v-model="info"></textarea>
+        <span @click="reply">确定</span>
+    </div>
+
+</div>
+
+    <script src="./js/lib/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        var instance = axios.create({
+            header:{
+                contentType: 'application/x-www-form-urlencoded'
+            }
+        });
+        new Vue({
+            el:"#page",
+            data:{
+                isShow:'',
+                activeShow:false,
+                num:1,
+                isActive:false,
+                msg:'',
+                goodsInfo:[],
+                giftInfo:[],
+                msgList:[],
+                info:'',
+                active:false,
+                userId:''
+            },
+            methods:{
+                add:function(){
+                    var that = this;
+                    instance({
+                        method:"POST",
+                        url:"http://dreamjxw.imwork.net:80/lz/design/complain/insertComplain.htm",
+                        data:{
+                            "complainUserId":that.userId,
+                            "complainGoodsId":that.goodsInfo.goodsId,
+                            "complainDescribe":that.msg
+                        },
+                        contentType: 'Access-Control-Allow-Origin'
+                    }).then(function(res){
+                        console.log(res.data);
+                        that.isActive=false;
+                        instance({
+                            method:"POST",
+                            url:"http://dreamjxw.imwork.net:80/lz/design/complain/selectByGoodsId.htm",
+                            data:{
+                                "complainGoodsId":that.goodsInfo.goodsId
+                            },
+                            contentType: 'Access-Control-Allow-Origin'
+                        }).then(function(res){
+                            console.log(res.data);
+                            that.msgList= res.data.data;
+                        },function(error){
+                            console.log(error);
+                        })
+                    },function(error){
+                        console.log(error);
+                    })
+                },
+                deleteWords: function (index) {
+                    var that = this;
+                    console.log(index);
+                    instance({
+                        method:"POST",
+                        url:"http://dreamjxw.imwork.net:80/lz/design/complain/deleteComplain.htm",
+                        data:{
+                            "complainId":that.msgList.complainId,
+                            "complainUserId":that.userId
+                        },
+                        contentType: 'Access-Control-Allow-Origin'
+                    }).then(function(res){
+                        console.log(res.data);
+                        that.msgList.splice(index,1);
+                    },function(error){
+                        console.log(error);
+                    })
+                },
+                reply:function(){
+                    var that = this;
+                    console.log(that.userId)
+                    instance({
+                        method:"POST",
+                        url:'http://dreamjxw.imwork.net:80/lz/design/complain/updateComplain.htm?userId='+ that.userId,
+                        data:{
+                            "complainId":that.msgList.complainId,
+                            "complainDescribe":that.info
+                        },
+                        contentType: 'Access-Control-Allow-Origin'
+                    }).then(function(res){
+                        console.log(res.data);
+                        that.active = false;
+                        instance({
+                            method:"POST",
+                            url:"http://dreamjxw.imwork.net:80/lz/design/goods/selectGoods.htm",
+                            data:{
+                                "complainGoodsId":that.goodsInfo.goodsId
+                            },
+                            contentType: 'Access-Control-Allow-Origin'
+                        }).then(function(res){
+                            console.log(res.data);
+                            that.msgList = res.data.data;
+                            console.log(that.msgList);
+                        },function(error){
+                            console.log(error);
+                        })
+                    },function(error){
+                        console.log(error);
+                    })
+                },
+                addCart:function(){
+                    var that = this;
+                    instance({
+                        method:"POST",
+                        url:"http://dreamjxw.imwork.net:80/lz/design/shopcart/insertShopCart.htm",
+                        data:{
+                            "userId":that.userId,
+                            "goodsId":that.goodsInfo.goodsId,
+                            "goodsNum":that.num
+                        },
+                        contentType: 'Access-Control-Allow-Origin'
+                    }).then(function(res){
+                        console.log(res.data);
+                        alert("加入购物车成功!")
+                    },function(error){
+                        console.log(error);
+                    })
+                }
+            },
+            mounted(){
+                var that = this;
+                function queryString(key){
+                    var src = location.search || location.hash,
+                            reg = new RegExp('[?&]' + key + '=([^?&=]*)(?=&|$)'),
+                            match = reg.exec(src);
+                    return match == null ? null : decodeURIComponent(match[1]);
+                }
+                var  goodsId= queryString('goodsId');
+                var  userId= queryString('userId');
+                that.userId = queryString('userId');
+                console.log(goodsId);
+                console.log(userId)
+
+
+            instance({
+                method:"POST",
+                url:"http://dreamjxw.imwork.net:80/lz/design/goods/selectGoods.htm",
+                data:{
+                    "message":goodsId
+                },
+                contentType: 'Access-Control-Allow-Origin'
+            }).then(function(res){
+                console.log(res.data);
+                that.goodsInfo = res.data.data[0];
+                if( that.goodsInfo.goodsGift == null){
+                    that.isShow=false;
+                }
+                else{
+                    that.giftInfo = that.goodsInfo.goodsGift[0];
+                    that.isShow=true;
+                }
+                console.log(that.giftInfo);
+                console.log(that.goodsInfo);
+            },function(error){
+                console.log(error);
+            });
+            instance({
+                method:"POST",
+                url:"http://dreamjxw.imwork.net:80/lz/design/complain/selectByGoodsId.htm",
+                data:{
+                    "complainGoodsId":goodsId
+                },
+                contentType: 'Access-Control-Allow-Origin'
+            }).then(function(res){
+                console.log(res.data);
+                that.msgList= res.data.data;
+            },function(error){
+                console.log(error);
+            })
+
+
+
+            }
+        })
+    </script>
+</body>
+</html>

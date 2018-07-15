@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lz.design.dao.ActivityDao">
+    <resultMap id="BaseResultMap" type="com.lz.design.model.Activity">
+        <id column="activity_id" property="activityId" jdbcType="INTEGER"/>
+        <result column="activity_name" property="activityName" jdbcType="VARCHAR"/>
+        <result column="activity_target" property="activityTarget" jdbcType="INTEGER"/>
+        <result column="activity_discount" property="activityDiscount" jdbcType="DOUBLE"/>
+        <result column="activity_state" property="activityState" jdbcType="INTEGER"/>
+        <result column="activity_time" property="activityTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    activity_id, activity_name, activity_target, activity_discount, activity_state, activity_time
+  </sql>
+
+    <select id="selectByActivityId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_activity
+        where activity_id = #{activityId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByActivityName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_activity
+        where activity_name = #{activity,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByActivityTarget" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_activity
+        where #{activityTarget,jdbcType=INTEGER} >= activity_target
+
+    </select>
+
+    <delete id="deleteByActivityId" parameterType="java.lang.Integer">
+    delete from lz_activity
+    where activity_id = #{activityId}
+  </delete>
+
+    <insert id="insertActivity" parameterType="com.lz.design.model.Activity">
+        insert into lz_activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activity.activityName != null">
+                activity_name,
+            </if>
+            <if test="activity.activityTarget != null">
+                activity_target,
+            </if>
+            <if test="activity.activityDiscount != null">
+                activity_discount,
+            </if>
+            <if test="activity.activityState != null">
+                activity_state,
+            </if>
+            <if test="activity.activityTime != null">
+                activity_time
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activity.activityName != null">
+                #{activity.activityName},
+            </if>
+            <if test="activity.activityTarget != null">
+                #{activity.activityTarget,jdbcType=INTEGER},
+            </if>
+            <if test="activity.activityDiscount != null">
+                #{activity.activityDiscount,jdbcType=DOUBLE},
+            </if>
+            <if test="activity.activityState != null">
+                #{activity.activityState,jdbcType=INTEGER},
+            </if>
+            <if test="activity.activityTime != null">
+                #{activity.activityTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByActivityId" parameterType="com.lz.design.model.Activity">
+        update lz_activity
+        <set>
+            <if test="activity.activityName != null">
+                activity_name = #{activity.activityName,jdbcType=VARCHAR},
+            </if>
+            <if test="activity.activityTarget != null">
+                activity_target = #{activity.activityTarget,jdbcType=INTEGER},
+            </if>
+            <if test="activity.activityDiscount != null">
+                activity_discount = #{activity.activityDiscount,jdbcType=DOUBLE},
+            </if>
+            <if test="activity.activityState != null">
+                activity_state = #{activity.activityState,jdbcType=INTEGER},
+            </if>
+            <if test="activity.activityTime != null">
+                activity_time = #{activity.activityTime,jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        where activity_id = #{activity.activityId}
+    </update>
+</mapper>

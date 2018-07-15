@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lz.design.dao.GoodsDao">
+    <resultMap id="BaseResultMap" type="com.lz.design.model.Goods">
+        <id column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_picture" property="goodsPicture" jdbcType="VARCHAR"/>
+        <result column="goods_price" property="goodsPrice" jdbcType="DOUBLE"/>
+        <result column="goods_class" property="goodsClass" jdbcType="VARCHAR"/>
+        <result column="goods_sales" property="goodsSales" jdbcType="INTEGER"/>
+        <result column="goods_gift" property="goodsGift" typeHandler="GoodsHandler"/>
+        <result column="goods_sales_downtime" property="goodsSalesDowntime" jdbcType="TIMESTAMP"/>
+        <result column="goods_uptime" property="goodsUptime" jdbcType="TIMESTAMP"/>
+        <result column="goods_expire" property="goodsExpire" jdbcType="TIMESTAMP"/>
+        <result column="goods_describe" property="goodsDescribe" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    goods_id, goods_name, goods_picture, goods_price, goods_class, goods_sales, goods_gift, 
+    goods_sales_downtime, goods_uptime, goods_expire, goods_describe
+  </sql>
+    <select id="selectByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_goods
+        <where>
+            <if test="goodsId != null">
+                goods_id = #{goodsId}
+            </if>
+        </where>
+        order by goods_id
+        desc
+    </select>
+
+    <select id="searchGoods" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_goods
+        <where>
+            <if test="contents != null">
+                goods_name LIKE concat(concat("%",#{contents}),"%")
+            </if>
+        </where>
+    </select>
+
+    <select id="selectGoodsByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_goods
+        WHERE
+        goods_name = #{goodsName}
+    </select>
+
+    <select id="selectGoodsBySomething" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_goods
+        <where>
+            <if test="className != null">
+                goods_sales = #{className,jdbcType=INTEGER}
+            </if>
+        </where>
+        order by goods_id
+        desc
+    </select>
+
+    <select id="selectGoodsByExpire" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_goods
+        where goods_expire &lt;= #{expireTime}
+        order by goods_id
+        desc
+    </select>
+
+    <delete id="deleteByGoodsId" parameterType="java.lang.Integer">
+        delete from lz_goods
+        <where>
+            <foreach collection="goodsIds" item="item" open="(" close=")" separator="or">
+                goods_id = #{item}
+            </foreach>
+        </where>
+    </delete>
+
+    <select id="selectByEach" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from lz_goods
+        <where>
+            <foreach collection="goodsIds" item="item" open="(" close=")" separator="or">
+                goods_id = #{item}
+            </foreach>
+        </where>
+    </select>
+    <insert id="insertGoods" parameterType="com.lz.design.model.Goods" keyProperty="goods.goodsId">
+        insert into lz_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goods.goodsName != null">
+                goods_name,
+            </if>
+            <if test="goods.goodsPicture != null">
+                goods_picture,
+            </if>
+            <if test="goods.goodsPrice != null">
+                goods_price,
+            </if>
+            <if test="goods.goodsClass != null">
+                goods_class,
+            </if>
+            <if test="goods.goodsUptime != null">
+                goods_uptime,
+            </if>
+            <if test="goods.goodsExpire != null">
+                goods_expire,
+            </if>
+            <if test="goods.goodsDescribe != null">
+                goods_describe,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goods.goodsName != null">
+                #{goods.goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goods.goodsPicture != null">
+                #{goods.goodsPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="goods.goodsPrice != null">
+                #{goods.goodsPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="goods.goodsClass != null">
+                #{goods.goodsClass,jdbcType=VARCHAR},
+            </if>
+            <if test="goods.goodsUptime != null">
+                #{goods.goodsUptime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goods.goodsExpire != null">
+                #{goods.goodsExpire,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goods.goodsDescribe != null">
+                #{goods.goodsDescribe,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByGoodsId" parameterType="com.lz.design.model.Goods">
+        update lz_goods
+        <set>
+            <if test="goods.goodsName != null">
+                goods_name = #{goods.goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goods.goodsPicture != null">
+                goods_picture = #{goods.goodsPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="goods.goodsPrice != null">
+                goods_price = #{goods.goodsPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="goods.goodsClass != null">
+                goods_class = #{goods.goodsClass,jdbcType=VARCHAR},
+            </if>
+            <if test="goods.goodsSales != null">
+                goods_sales = #{goods.goodsSales,jdbcType=INTEGER},
+            </if>
+            <if test="goods.goodsGift != null">
+                goods_gift = #{goods.goodsGift,typeHandler=JsonFieldHandler},
+            </if>
+            <if test="goods.goodsSalesDowntime != null">
+                goods_sales_downtime = #{goods.goodsSalesDowntime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goods.goodsUptime != null">
+                goods_uptime = #{goods.goodsUptime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goods.goodsExpire != null">
+                goods_expire = #{goods.goodsExpire,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goods.goodsDescribe != null">
+                goods_describe = #{goods.goodsDescribe,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where goods_id = #{goods.goodsId,jdbcType=INTEGER}
+    </update>
+</mapper>

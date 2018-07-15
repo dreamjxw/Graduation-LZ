@@ -1,0 +1,932 @@
+.index {
+    background: url("../img/main/bg1%20.jpg") no-repeat;
+    -webkit-background-size: cover;
+            background-size: cover;
+}
+.index .top {
+    width: 100%;
+    height: 99px;
+    background: url("../img/nav/nav.png");
+    -webkit-background-size: 100% 99px;
+            background-size: 100% 99px;
+    opacity: 0.7;
+    position: relative;
+}
+.index .top .nav {
+    width: 1100px;
+    padding: 0 10px 0 10px;
+    position: absolute;
+    left: 50%;
+    margin-left: -550px;
+    -webkit-border-radius: 20px;
+            border-radius: 20px;
+}
+.index .top .nav li {
+    float: left;
+    height: 100px;
+    line-height: 100px;
+    width: 180px;
+    font-size: 24px;
+}
+.index .top .nav li a {
+    display: block;
+    color: #012426;
+}
+.index .top .nav li a img {
+    margin-left: 10px;
+}
+.index .top .nav li a:hover {
+    cursor: pointer;
+    color: #012426;
+}
+.index .top .nav .search {
+    float: right;
+    width: 450px;
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    top: 50%;
+    margin-top: -20px;
+    right: 0;
+}
+.index .top .nav .search .form {
+    float: left;
+}
+.index .top .nav .search .form .magnifying {
+    display: block;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background: url("../img/search/magnifying.png") no-repeat;
+    -webkit-background-size: 30px 30px;
+            background-size: 30px 30px;
+}
+.index .top .nav .search .form .text {
+    margin-left: 10px;
+    width: 350px;
+    height: 40px;
+    -webkit-border-radius: 10px;
+            border-radius: 10px;
+    outline: none;
+    font-size: 18px;
+    padding-left: 20px;
+    border: 1px solid #e8ba5b;
+}
+.index .top .nav .search .btn1 {
+    float: right;
+    font-size: 20px;
+    color: #f7dc1d;
+}
+.index .top .nav .search .btn1:hover {
+    cursor: pointer;
+}
+.index .main {
+    width: 100%;
+    margin-top: 40px;
+    position: relative;
+}
+.index .main .section {
+    width: 1100px;
+    position: relative;
+    left: 50%;
+    margin-left: -550px;
+}
+.index .main .section .discount {
+    width: 120px;
+    height: 30px;
+    border: none;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
+    background: #e8ba5b;
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 10px;
+    outline: none;
+}
+.index .main .section .discount:hover {
+    cursor: pointer;
+}
+.index .main .section ul li {
+    width: 250px;
+    height: 330px;
+    -webkit-border-radius: 10px;
+            border-radius: 10px;
+    margin-left: 25px;
+    margin-bottom: 30px;
+    float: left;
+    background: #fff;
+    z-index: 10;
+}
+.index .main .section ul li .goodImg {
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+}
+.index .main .section ul li .goodImg img {
+    width: 200px;
+    height: 200px;
+    border: none;
+}
+.index .main .section ul li div {
+    text-align: center;
+    font-size: 18px;
+}
+.index .main .section ul li .price {
+    height: 50px;
+    text-align: center;
+    color: #e8ba5b;
+    line-height: 50px;
+}
+.shoppingCart {
+    background: url("../img/main/bg1%20.jpg") no-repeat;
+    -webkit-background-size: cover;
+            background-size: cover;
+}
+.shoppingCart .top {
+    width: 100%;
+    height: 99px;
+    background: url("../img/nav/nav.png");
+    -webkit-background-size: 100% 99px;
+            background-size: 100% 99px;
+    opacity: 0.7;
+    position: relative;
+}
+.shoppingCart .top .nav {
+    width: 1100px;
+    padding: 0 10px 0 10px;
+    position: absolute;
+    left: 50%;
+    margin-left: -550px;
+    -webkit-border-radius: 20px;
+            border-radius: 20px;
+}
+.shoppingCart .top .nav li {
+    float: left;
+    height: 100px;
+    line-height: 100px;
+    width: 180px;
+    font-size: 24px;
+}
+.shoppingCart .top .nav li a {
+    display: block;
+    color: #012426;
+}
+.shoppingCart .top .nav li a img {
+    margin-left: 10px;
+}
+.shoppingCart .top .nav li a:hover {
+    cursor: pointer;
+    color: #012426;
+}
+.shoppingCart .top .nav .logo {
+    float: right;
+    font-size: 40px;
+    color: #999999;
+    line-height: 99px;
+    margin-right: 30px;
+}
+.shoppingCart .section {
+    width: 1100px;
+    position: absolute;
+    left: 50%;
+    margin-left: -550px;
+    padding: 0 20px;
+    background: #fff;
+}
+.shoppingCart .section .tittle {
+    height: 100px;
+    line-height: 100px;
+    font-size: 20px;
+    position: relative;
+    border-bottom: 5px solid #9da0a4;
+}
+.shoppingCart .section .tittle li {
+    float: left;
+}
+.shoppingCart .section .tittle .select {
+    width: 180px;
+}
+.shoppingCart .section .tittle .select .check {
+    display: block;
+    width: 26px;
+    height: 26px;
+    float: left;
+    background: url("../img/shopping_cart/check.png") no-repeat;
+    -webkit-background-size: 20px 20px;
+            background-size: 20px 20px;
+    position: absolute;
+    top: 50%;
+    margin-top: -13px;
+}
+.shoppingCart .section .tittle .select .check:hover {
+    cursor: pointer;
+}
+.shoppingCart .section .tittle .select .check-true {
+    background: url("../img/shopping_cart/check_y.png") no-repeat;
+    -webkit-background-size: 20px 20px;
+            background-size: 20px 20px;
+}
+.shoppingCart .section .tittle .select .check-right {
+    display: block;
+    float: left;
+    margin-left: 35px;
+}
+.shoppingCart .section .tittle .brief {
+    width: 350px;
+    padding-left: 20px;
+}
+.shoppingCart .section .tittle .price {
+    width: 150px;
+}
+.shoppingCart .section .tittle .number {
+    width: 120px;
+}
+.shoppingCart .section .tittle .total {
+    width: 100px;
+    text-align: center;
+}
+.shoppingCart .section .tittle .revise {
+    width: 100px;
+    text-align: center;
+}
+.shoppingCart .section .proList li {
+    height: 150px;
+    font-size: 20px;
+    position: relative;
+    border-bottom: 5px solid #9da0a4;
+}
+.shoppingCart .section .proList li div {
+    float: left;
+}
+.shoppingCart .section .proList li .select {
+    width: 180px;
+    height: 150px;
+    line-height: 150px;
+}
+.shoppingCart .section .proList li .select .check {
+    width: 26px;
+    height: 26px;
+    float: left;
+    background: url("../img/shopping_cart/check.png") no-repeat;
+    -webkit-background-size: 20px 20px;
+            background-size: 20px 20px;
+    position: absolute;
+    top: 50%;
+    margin-top: -13px;
+}
+.shoppingCart .section .proList li .select .check:hover {
+    cursor: pointer;
+}
+.shoppingCart .section .proList li .select .check-true {
+    background: url("../img/shopping_cart/check_y.png") no-repeat;
+    -webkit-background-size: 20px 20px;
+            background-size: 20px 20px;
+}
+.shoppingCart .section .proList li .select .check-right {
+    display: block;
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin-left: 35px;
+}
+.shoppingCart .section .proList li .select .check-right img {
+    width: 100px;
+    height: 100px;
+}
+.shoppingCart .section .proList li .brief {
+    width: 350px;
+    height: 150px;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+.shoppingCart .section .proList li .brief p {
+    height: 30px;
+}
+.shoppingCart .section .proList li .price {
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+}
+.shoppingCart .section .proList li .number {
+    width: 150px;
+    height: 150px;
+    position: relative;
+}
+.shoppingCart .section .proList li .number .box {
+    width: 90px;
+    height: 30px;
+    background: #9da0a4;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;
+    line-height: 30px;
+}
+.shoppingCart .section .proList li .number .box span {
+    display: block;
+    text-align: center;
+    float: left;
+    height: 30px;
+}
+.shoppingCart .section .proList li .number .box span:nth-child(1) {
+    width: 24px;
+}
+.shoppingCart .section .proList li .number .box span:nth-child(2) {
+    width: 40px;
+    border: 1px solid #000;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
+    background: #fff;
+}
+.shoppingCart .section .proList li .number .box span:nth-child(3) {
+    width: 24px;
+}
+.shoppingCart .section .proList li .number .box span:hover {
+    cursor: pointer;
+}
+.shoppingCart .section .proList li .total {
+    width: 120px;
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+}
+.shoppingCart .section .proList li .delete {
+    width: 100px;
+    height: 150px;
+    text-align: center;
+    position: relative;
+}
+.shoppingCart .section .proList li .delete span {
+    display: block;
+    width: 60px;
+    height: 30px;
+    background: #e8ba5b;
+    position: absolute;
+    top: 50%;
+    margin-top: -20px;
+    color: #fff;
+    line-height: 30px;
+    -webkit-border-radius: 15px;
+            border-radius: 15px;
+}
+.shoppingCart .section .proList li .delete span:hover {
+    cursor: pointer;
+}
+.shoppingCart .section .footer {
+    width: 1100px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    margin-left: -550px;
+    position: fixed;
+    bottom: 0;
+    background: #cccccc;
+    padding: 0 30px;
+    font-size: 22px;
+}
+.shoppingCart .section .footer .deleteAll {
+    width: 200px;
+    background: url("../img/shopping_cart/delete.png") no-repeat left center;
+    -webkit-background-size: 30px 30px;
+            background-size: 30px 30px;
+    padding-left: 30px;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    position: absolute;
+    top: 50%;
+    margin-top: -20px;
+}
+.shoppingCart .section .footer .footer-right {
+    height: 100px;
+    width: 500px;
+    float: right;
+    position: relative;
+}
+.shoppingCart .section .footer .footer-right .add-up {
+    float: left;
+    width: 300px;
+    height: 100px;
+    line-height: 100px;
+}
+.shoppingCart .section .footer .footer-right .add-up span {
+    color: #e8ba5b;
+}
+.shoppingCart .section .footer .footer-right .settle {
+    width: 90px;
+    height: 40px;
+    background: #e8ba5b;
+    line-height: 40px;
+    color: #fff;
+    -webkit-border-radius: 10px;
+            border-radius: 10px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    margin-top: -20px;
+    right: 20px;
+}
+.shoppingCart .section .footer .footer-right .settle:hover {
+    cursor: pointer;
+}
+.shoppingCart .popUp {
+    width: 1100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+.shoppingCart .popUp input {
+    width: 100px;
+    height: 50px;
+    background: #e8ba5b;
+    color: #fff;
+    -webkit-border-radius: 20px;
+            border-radius: 20px;
+    border: none;
+    outline: none;
+}
+.shoppingCart .popUp input:hover {
+    cursor: pointer;
+}
+.goods {
+    background: url("../img/main/bg1%20.jpg") no-repeat;
+    -webkit-background-size: cover;
+            background-size: cover;
+}
+.goods .top {
+    width: 100%;
+    height: 99px;
+    background: url("../img/nav/nav.png") no-repeat;
+    -webkit-background-size: 100% 99px;
+            background-size: 100% 99px;
+    opacity: 0.7;
+    position: relative;
+}
+.goods .top .nav {
+    width: 1100px;
+    padding: 0 10px 0 10px;
+    position: absolute;
+    left: 50%;
+    margin-left: -550px;
+    -webkit-border-radius: 20px;
+            border-radius: 20px;
+}
+.goods .top .nav li {
+    float: left;
+    height: 100px;
+    line-height: 100px;
+    width: 180px;
+    font-size: 24px;
+}
+.goods .top .nav li a {
+    display: block;
+    color: #012426;
+}
+.goods .top .nav li a img {
+    margin-left: 10px;
+}
+.goods .top .nav li a:hover {
+    cursor: pointer;
+    color: #012426;
+}
+.goods .top .nav .logo {
+    float: right;
+    font-size: 40px;
+    color: #999999;
+    line-height: 99px;
+    margin-right: 30px;
+}
+.goods .section {
+    width: 100%;
+    position: relative;
+    height: 580px;
+}
+.goods .section .pro {
+    width: 1100px;
+    position: absolute;
+    left: 50%;
+    margin-left: -550px;
+    padding: 50px 30px;
+    background: #fff;
+}
+.goods .section .pro .goodImg {
+    float: left;
+    width: 400px;
+    height: 500px;
+    margin-right: 50px;
+    position: relative;
+}
+.goods .section .pro .goodImg img {
+    margin-top: 30px;
+    width: 400px;
+    height: 400px;
+    -webkit-border-radius: 30px;
+            border-radius: 30px;
+}
+.goods .section .pro .goodInfo {
+    float: right;
+    width: 550px;
+    margin-top: 50px;
+}
+.goods .section .pro .goodInfo p {
+    font-size: 20px;
+    line-height: 30px;
+}
+.goods .section .pro .goodInfo .price {
+    margin-top: 25px;
+    margin-bottom: 20px;
+    height: 40px;
+    background: #cccccc;
+    line-height: 40px;
+    padding-left: 20px;
+}
+.goods .section .pro .goodInfo .price span:nth-child(2n+1) {
+    font-size: 18px;
+    color: #9da0a4;
+}
+.goods .section .pro .goodInfo .price span:nth-child(2) {
+    font-size: 24px;
+    color: #e8ba5b;
+    margin: 0 40px;
+}
+.goods .section .pro .goodInfo .number {
+    margin-top: 30px;
+    width: 130px;
+    height: 40px;
+    background: #9da0a4;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
+    line-height: 40px;
+}
+.goods .section .pro .goodInfo .number span {
+    display: block;
+    text-align: center;
+    float: left;
+    height: 40px;
+    font-size: 20px;
+}
+.goods .section .pro .goodInfo .number span:nth-child(1) {
+    width: 36px;
+}
+.goods .section .pro .goodInfo .number span:nth-child(2) {
+    width: 58px;
+    border: 1px solid #000;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
+    background: #fff;
+}
+.goods .section .pro .goodInfo .number span:nth-child(3) {
+    width: 35px;
+}
+.goods .section .pro .goodInfo .number span:hover {
+    cursor: pointer;
+}
+.goods .section .pro .goodInfo .gift {
+    height: 130px;
+    margin-top: 50px;
+}
+.goods .section .pro .goodInfo .gift .tip {
+    font-size: 20px;
+    color: #e8ba5b;
+    margin-bottom: 10px;
+}
+.goods .section .pro .goodInfo .gift .giftImg {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    float: left;
+    margin-right: 20px;
+}
+.goods .section .pro .goodInfo .gift .giftImg img {
+    -webkit-border-radius: 10px;
+            border-radius: 10px;
+    width: 100px;
+    height: 100px;
+}
+.goods .section .pro .goodInfo .gift .giftInfo {
+    width: 500px;
+}
+.goods .section .pro .goodInfo .gift .giftInfo p {
+    font-size: 16px;
+}
+.goods .section .pro .cart {
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    width: 130px;
+    height: 40px;
+    border: none;
+    -webkit-border-radius: 10px;
+            border-radius: 10px;
+    background: #e8ba5b;
+    color: #fff;
+    font-size: 18px;
+    outline: none;
+}
+.goods .section .pro .cart:hover {
+    cursor: pointer;
+}
+.goods .words {
+    width: 1100px;
+    position: absolute;
+    left: 50%;
+    margin-left: -550px;
+    padding: 30px;
+    background: #fff;
+}
+.goods .words .check {
+    font-size: 20px;
+    background: url("../img/search/angle_brackets.png") no-repeat;
+    -webkit-background-size: 15px 15px;
+            background-size: 15px 15px;
+    padding-left: 25px;
+    margin-bottom: 20px;
+}
+.goods .words .check:hover {
+    cursor: pointer;
+}
+.goods .words .content {
+    margin-bottom: 26px;
+}
+.goods .words .content li {
+    padding: 10px 10px 20px;
+    border-bottom: 3px solid #cccccc;
+    margin-bottom: 10px;
+}
+.goods .words .content li div {
+    position: relative;
+}
+.goods .words .content li div .order {
+    font-size: 20px;
+    color: #e8ba5b;
+    float: left;
+    margin-right: 10px;
+    line-height: 30px;
+}
+.goods .words .content li div .text {
+    line-height: 30px;
+    font-size: 20px;
+    width: 900px;
+}
+.goods .words .content li div .delete {
+    display: block;
+    float: right;
+    width: 30px;
+    height: 30px;
+    background: url("../img/shopping_cart/delete.png") no-repeat;
+    -webkit-background-size: 30px 30px;
+            background-size: 30px 30px;
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;
+    right: 20px;
+}
+.goods .words .content li div .delete:hover {
+    cursor: pointer;
+}
+.goods .words .content li .reply {
+    display: block;
+    font-size: 20px;
+    color: #e8ba5b;
+    margin-top: 20px;
+}
+.goods .words .add {
+    font-size: 20px;
+    color: #e8ba5b;
+    margin-bottom: 10px;
+}
+.goods .words .add:hover {
+    cursor: pointer;
+}
+.goods .words .confirm {
+    width: 500px;
+    position: relative;
+}
+.goods .words .confirm .write {
+    width: 500px;
+    height: 60px;
+    outline: none;
+    margin-bottom: 10px;
+}
+.goods .words .confirm span {
+    display: block;
+    position: absolute;
+    right: 10px;
+    font-size: 20px;
+    color: #e8ba5b;
+}
+.goods .words .confirm span:hover {
+    cursor: pointer;
+}
+.goods .confirm {
+    width: 500px;
+    position: relative;
+}
+.goods .confirm .compose {
+    width: 500px;
+    height: 60px;
+    outline: none;
+    margin-bottom: 10px;
+}
+.goods .confirm span {
+    display: block;
+    position: absolute;
+    right: 10px;
+    font-size: 20px;
+    color: #e8ba5b;
+}
+.goods .confirm span:hover {
+    cursor: pointer;
+}
+.personCenter {
+    background: url("../img/main/bg1%20.jpg") no-repeat;
+    -webkit-background-size: cover;
+            background-size: cover;
+}
+.personCenter .top {
+    width: 100%;
+    height: 99px;
+    background: url("../img/nav/nav.png") no-repeat;
+    -webkit-background-size: 100% 99px;
+            background-size: 100% 99px;
+    opacity: 0.7;
+    position: relative;
+}
+.personCenter .top .nav {
+    width: 1100px;
+    padding: 0 10px 0 10px;
+    position: absolute;
+    left: 50%;
+    margin-left: -550px;
+    -webkit-border-radius: 20px;
+            border-radius: 20px;
+}
+.personCenter .top .nav li {
+    float: left;
+    height: 100px;
+    line-height: 100px;
+    width: 180px;
+    font-size: 24px;
+}
+.personCenter .top .nav li a {
+    display: block;
+    color: #012426;
+}
+.personCenter .top .nav li a img {
+    margin-left: 10px;
+}
+.personCenter .top .nav li a:hover {
+    cursor: pointer;
+    color: #012426;
+}
+.personCenter .top .nav .logo {
+    float: right;
+    font-size: 40px;
+    color: #999999;
+    line-height: 99px;
+    margin-right: 30px;
+}
+.personCenter .section {
+    width: 1100px;
+    position: absolute;
+    left: 50%;
+    margin-left: -550px;
+    padding: 40px;
+    background: #eeeeee;
+}
+.personCenter .section .personInfo .headImg {
+    float: left;
+    width: 300px;
+    position: relative;
+}
+.personCenter .section .personInfo .headImg img {
+    width: 150px;
+    height: 150px;
+    -webkit-border-radius: 20px;
+            border-radius: 20px;
+}
+.personCenter .section .personInfo .headImg .pic {
+    color: #e8ba5b;
+    margin-top: 20px;
+    float: right;
+    display: block;
+    width: 100px;
+    height: 30px;
+}
+.personCenter .section .personInfo .headImg .pic span {
+    width: 120px;
+    height: 30px;
+    display: block;
+    font-size: 18px;
+}
+.personCenter .section .personInfo .headImg .pic input {
+    outline: none;
+    width: 150px;
+    height: 30px;
+}
+.personCenter .section .personRight {
+    float: right;
+    width: 600px;
+    text-align: left;
+}
+.personCenter .section .personRight p {
+    font-size: 20px;
+    line-height: 40px;
+}
+.personCenter .section .nav {
+    margin-top: 50px;
+    height: 100px;
+}
+.personCenter .section .nav li {
+    float: left;
+    width: 240px;
+    text-align: center;
+    font-size: 20px;
+    color: #0f7595;
+}
+.personCenter .section .nav li.active {
+    color: #e8ba5b;
+}
+.personCenter .section .nav li:hover {
+    cursor: pointer;
+    color: #e8ba5b;
+}
+.personCenter .section .activity {
+    padding-left: 50px;
+}
+.personCenter .section .activity ul .title {
+    height: 30px;
+    line-height: 30px;
+    background: lightpink;
+}
+.personCenter .section .activity ul .title span {
+    float: left;
+    display: block;
+    width: 300px;
+    text-align: center;
+    font-size: 20px;
+}
+.personCenter .section .activity ul .pro {
+    height: 50px;
+    font-size: 18px;
+    line-height: 50px;
+}
+.personCenter .section .activity ul .pro span {
+    float: left;
+    display: block;
+    width: 300px;
+    text-align: center;
+    font-size: 20px;
+}
+.personCenter .section .allOrder ul {
+    padding: 40px;
+}
+.personCenter .section .allOrder ul li {
+    padding: 10px 0;
+}
+.personCenter .section .allOrder ul li .brief {
+    font-size: 20px;
+    line-height: 35px;
+}
+.personCenter .section .allOrder ul li .brief .one {
+    float: left;
+}
+.personCenter .section .allOrder ul li .brief .two {
+    float: left;
+    margin-left: 300px ;
+}
+.personCenter .section .allOrder ul li .brief .tip {
+    float: right;
+    color: #e8ba5b;
+    font-size: 40px;
+}
+.personCenter .section .allOrder ul li .brief .tip:hover {
+    cursor: pointer;
+}
+.personCenter .section .allOrder ul .details .order-goods li {
+    height: 100px;
+}
+.personCenter .section .allOrder ul .details .order-goods li .goodsPicture {
+    float: left;
+}
+.personCenter .section .allOrder ul .details .order-goods li .goodsPicture img {
+    width: 100px;
+    height: 100px;
+}
+.personCenter .section .allOrder ul .details .order-goods li .commodity-information {
+    float: right;
+}
+.personCenter .section .allOrder ul .details .order-goods li .commodity-information span {
+    float: left;
+    display: block;
+    width: 230px;
+    font-size: 20px;
+    line-height: 100px;
+    text-align: center;
+}
+.personCenter .section .allOrder ul .details .order-goods li .commodity-information .goodsPrice {
+    color: #e8ba5b;
+}
+

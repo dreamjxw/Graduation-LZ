@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lz.design.dao.ShopCartDao">
+    <resultMap id="BaseResultMap" type="com.lz.design.model.ShopCart">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="goods_num" property="goodsNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, goods_id, goods_num, start_time
+  </sql>
+    <insert id="insertShopCart" parameterType="com.lz.design.model.ShopCart">
+        insert into lz_shopcart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopCart.userId != null">
+                user_id,
+            </if>
+            <if test="shopCart.goodsId != null">
+                goods_id,
+            </if>
+            <if test="shopCart.goodsNum != null">
+                goods_num,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopCart.userId != null">
+                #{shopCart.userId,jdbcType=INTEGER},
+            </if>
+            <if test="shopCart.goodsId != null">
+                #{shopCart.goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="shopCart.goodsNum != null">
+                #{shopCart.goodsNum,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateShopCart" parameterType="com.lz.design.model.ShopCart">
+        update lz_shopcart
+        <set>
+            <if test="shopCart.goodsNum != null">
+                goods_num = #{shopCart.goodsNum},
+            </if>
+        </set>
+        where
+        user_id = #{shopCart.userId,jdbcType=INTEGER} AND
+        goods_id = #{shopCart.goodsId,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteAllShopCart">
+        delete from lz_shopcart
+        WHERE
+        user_id = #{userId}
+    </delete>
+
+    <delete id="deleteShopCart" parameterType="com.lz.design.model.ShopCart">
+        DELETE FROM lz_shopcart
+        WHERE
+            user_id = #{shopCart.userId,jdbcType=INTEGER} AND
+            goods_id = #{shopCart.goodsId,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteShopCartByGoodsIdBatch">
+        DELETE FROM lz_shopcart
+        <where>
+            user_id = #{userId,jdbcType=INTEGER} AND
+            <foreach collection="goodsId" item="item" open="(" close=")" separator="or">
+                goods_id = #{item}
+            </foreach>
+        </where>
+    </delete>
+    <select id="checkRepeat" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_shopcart
+        where
+        user_id = #{userId} AND
+        goods_id = #{goodsId}
+    </select>
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_shopcart
+        where user_id = #{userId}
+        limit 1000
+    </select>
+</mapper>

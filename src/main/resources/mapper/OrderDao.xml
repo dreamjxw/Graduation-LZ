@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lz.design.dao.OrderDao">
+    <resultMap id="BaseResultMap" type="com.lz.design.model.Order">
+        <id column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="order_details" property="orderGoods" typeHandler="OrderGoodsHandler"/>
+        <result column="order_totalprice" property="orderTotalprice" jdbcType="DOUBLE"/>
+        <result column="order_date_start" property="orderDateStart" jdbcType="TIMESTAMP"/>
+        <result column="order_date_end" property="orderDateEnd" jdbcType="TIMESTAMP"/>
+        <result column="pay_status_id" property="payStatusId" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    order_id, user_id,order_details, order_totalprice, order_date_start, order_date_end, pay_status_id
+  </sql>
+    <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_order
+        where order_id = #{orderId}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from lz_order
+        where user_id = #{userId}
+    </select>
+
+    <insert id="insertOrder" parameterType="com.lz.design.model.Order">
+        insert into lz_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="order.orderId != null">
+                order_id,
+            </if>
+            <if test="order.userId != null">
+                user_id,
+            </if>
+            <if test="order.orderTotalprice != null">
+                order_totalprice,
+            </if>
+            <if test="order.orderDateStart != null">
+                order_date_start,
+            </if>
+            <if test="order.payStatusId != null">
+                pay_status_id,
+            </if>
+            <if test="order.orderGoods != null">
+                order_details
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="order.orderId != null">
+                #{order.orderId},
+            </if>
+            <if test="order.userId != null">
+                #{order.userId,jdbcType=VARCHAR},
+            </if>
+            <if test="order.orderTotalprice != null">
+                #{order.orderTotalprice,jdbcType=DOUBLE},
+            </if>
+            <if test="order.orderDateStart != null">
+                #{order.orderDateStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="order.payStatusId != null">
+                #{order.payStatusId,jdbcType=TINYINT},
+            </if>
+            <if test="order.orderGoods != null">
+                #{order.orderGoods,typeHandler=JsonFieldHandler}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateOrderStateByOrderId" parameterType="com.lz.design.model.Order">
+        update lz_order
+        <set>
+            <if test="order.orderDateEnd != null">
+                order_date_end = #{order.orderDateEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="order.payStatusId != null">
+                pay_status_id = #{order.payStatusId}
+            </if>
+        </set>
+        where order_id = #{order.orderId}
+    </update>
+</mapper>

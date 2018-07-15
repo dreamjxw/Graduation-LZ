@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link href="css/common.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="index">
+<div id="page" >
+    <div class="top">
+        <ul class="nav clearfix">
+            <li>
+                <a :href="'./index.html?userId='+this.userId">首页<img src="img/nav/home-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <li>
+                <a :href="'./personCenter.html?userId='+this.userId">个人中心<img src="img/nav/my-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <li>
+                <a :href="'./shopingCart.html?userId='+this.userId">购物车<img src="img/nav/shoppingcart-y.png" style="width:35px;height:35px"></a>
+            </li>
+            <div class="search clearfix">
+                <div   class="form clearfix">
+                    <span class="magnifying"></span>
+                    <input type="text" class="text"  placeholder="输入品牌、产地、年份进行搜索" v-model="msg" @keyup.enter="show($event)">
+                </div>
+                <div class="btn1" @click="search()">搜索</div>
+            </div>
+        </ul>
+    </div>
+    <div class="main">
+        <div class="section">
+            <button class="discount" @click="discount()">查看折扣商品</button>
+            <ul class="clearfix">
+                <li v-for="(item,index) in goodsInfo">
+                    <a class="goodImg" :href="'./goods.html?userId='+userId +'&goodsId='+ item.goodsId ">
+                        <img :src="item.goodsPicture">
+                    </a>
+                    <div> {{item.goodsName}}</div>
+                    <div class="price">￥{{item.goodsPrice}}</div>
+                    <div class="brief">类别：{{item.goodsClass}}</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+
+<script src="./js/lib/vue.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var instance = axios.create({
+        header:{
+            contentType: 'application/x-www-form-urlencoded'
+        }
+    });
+    new Vue({
+        el:"#page",
+        data:{
+            goodsInfo:[],
+            msg:'',
+            userId:''
+        },
+        methods:{
+            search:function(){
+                var that = this;
+                instance({
+                    method:"POST",
+                    url:"http://dreamjxw.imwork.net:80/lz/design/goods/searchGoods.htm",
+                    data:{
+                        "message":that.msg
+                    },
+                    contentType: 'Access-Control-Allow-Origin'
+                }).then(function(res){
+                    console.log(res.data);
+                    that.goodsInfo = res.data.data;
+//                    console.log(that.goodsInfo);
+                },function(error){
+                    console.log(error);
+                })
+            },
+            show:function(event){
+                var that = this;
+                instance({
+                    method:"POST",
+                    url:"http://dreamjxw.imwork.net:80/lz/design/goods/searchGoods.htm",
+                    data:{
+                        "message":that.msg
+                    },
+                    contentType: 'Access-Control-Allow-Origin'
+                }).then(function(res){
+                    console.log(res.data);
+                    that.goodsInfo = res.data.data;
+//                    console.log(that.goodsInfo);
+                },function(error){
+                    console.log(error);
+                })
+            },
+            discount:function(){
+                var that = this;
+                instance({
+                    method:"POST",
+                    url:"http://dreamjxw.imwork.net:80/lz/design/goods/selectGoodsBySomething.htm",
+                    data:{
+                        "message":'1'
+                    },
+                    contentType: 'Access-Control-Allow-Origin'
+                }).then(function(res){
+                    console.log(res.data);
+                    that.goodsInfo = res.data.data;
+                    console.log(that.goodsInfo);
+                },function(error){
+                    console.log(error);
+                })
+            }
+        },
+        mounted(){
+            var that = this;
+            function queryString(key){
+                var src = location.search || location.hash,
+                        reg = new RegExp('[?&]' + key + '=([^?&=]*)(?=&|$)'),
+                        match = reg.exec(src);
+                return match == null ? null : decodeURIComponent(match[1]);
+            }
+            var  userId= queryString('userId');
+            this.userId=userId;
+//            console.log(userId);
+//            console.log(this.userId)
+            instance({
+                method:"POST",
+                url:"http://dreamjxw.imwork.net:80/lz/design/goods/selectUpGoods.htm",
+                contentType: 'Access-Control-Allow-Origin'
+            }).then(function(res){
+                console.log(res.data);
+                that.goodsInfo = res.data.data;
+                console.log(that.goodsInfo);
+            },function(error){
+                console.log(error);
+            })
+        }
+    })
+</script>
+</body>
+</html>
